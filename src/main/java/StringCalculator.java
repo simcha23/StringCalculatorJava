@@ -1,81 +1,87 @@
-import javax.swing.JOptionPane;
 
 public class StringCalculator {
 
+
     public static void main(String[] args){
 
-        System.out.println("\n---------ADDITION----------\n");
+        add("");
+        add("1");
+        add("1,1");
+        add("1,2,3,4");
+        add("1\n2,3");
+        add("//;\n1;2");
+        add("//4\n142");
+        add("//;\n1000,1;2");
+        add("//***\n1***2***3");
 
-        String string = JOptionPane.showInputDialog("Please enter a string: ");
+        //  Negative numbers
+//        add("1,-2,3,-4");\
 
-        if(string.isEmpty()){
-            string = "";
-        }
+        // Invalid input
+//        add("//;\n1000;1;2;");
+//        add("   //;\n1000,1;2");
+//        add("1,2,3//;\n1000,1;2");
 
-        add(string);
-
-        // IN CASE YOU WANT TO USE THE HARDCODED INPUT UNCOMMENT THE CODE BELOW AND COMMENT THE ONE ON TOP.
-
-//        add("");
-//        add("1");
-//        add("1,1");
-//        add("1,2,3,4");
-//        add("1\n2,3");
-//        add("//;\n1;2");
-//        add("//4\n142");
-//        add("-1,-2,-3,-4"); // Negative not allowed
-//        add("//;\n1000,1;2");
-//        add("//***\n1***2***3");
-//        add("//***\n1***2***3567676v gf"); //Invalid input
 
     }
-    public static boolean add(String number){
+    public static boolean add(String num){
 
-        boolean status = false;
-
-        if(number == ""){
-            number = number.replace("", "0");
+        if(num.isEmpty()){
+            num = "0";
         }
 
-        number = number.replace("//;", "0");
-        number = number.replace("\n", ",");
-        number = number.replace(";", ",");
+        String delimiter = "[,\n;*]";
 
-        if(number.startsWith("//4")){
-            number = number.replace("//4", "0");
-            number = number.replace("4", ",");
-        }
-        number = number.replace("//***", "0");
-        number = number.replace("***", ",");
+        if(num.startsWith("//")) {
 
-        String[] numbers;
-        numbers = number.split(",");
+            String[] str;
 
-        int sum = 0;
-
-        try {
-            for (String newNumbers:numbers) {
-
-                int value = Integer.parseInt(newNumbers);
-                if(value < 1000){
-                    sum = sum + value;
-
-                }
+            if(num.startsWith("//;") || num.startsWith("//4")){
+                str = num.split("\n", 2);
+                delimiter = "[" + str[0].substring(2) +",]";
+            }
+            else {
+                str = num.split("\n", 4);
+                str[1] = str[1].replace(str[0].substring(2,5),";");
+                delimiter = ";";
             }
 
-            if(Integer.toString(sum).contains("-")){
-                System.out.println("ERROR:negatives not allowed -1,-2");
-                status = false;
-            }else {
-                System.out.println("Result: " + sum);
-                status = true;
+            num  = str[1];
+            if(num.endsWith(";")){
+                num = "@#$%";
+            }
+
+        }
+
+        String[] array = num.split(delimiter);
+        int sum = 0;
+        boolean condition = true;
+        String statement = "ERROR:negatives not allowed ";
+
+        try {
+            for (String number : array) {
+
+                if (Integer.parseInt(number) < 0) {
+                    statement = statement + number + ",";
+                    condition = false;
+                }
+                if (condition) {
+                    if (Integer.parseInt(number) < 1000) {
+                        sum = sum + Integer.parseInt(number);
+                        condition = true;
+                    }
+                }
+            }
+            if (condition) {
+                System.out.println("Output " + sum);
+            } else {
+                System.out.println(statement);
             }
         }catch (NumberFormatException ex){
             System.out.println("ERROR:Invalid input");
-            status = false;
+            condition = false;
         }
 
-        return status;
+        return condition;
     }
 }
-
