@@ -15,7 +15,7 @@ public class StringCalculator {
         add("//***\n1***2***3");
 
         //  Negative numbers
-//        add("1,-2,3,-4");\
+//        add("1,-2,3,-4,-5,8");
 
         // Invalid input
 //        add("//;\n1000;1;2;");
@@ -47,10 +47,10 @@ public class StringCalculator {
             }
 
             num  = str[1];
+
             if(num.endsWith(";")){
                 num = "@#$%";
             }
-
         }
 
         String[] array = num.split(delimiter);
@@ -62,14 +62,12 @@ public class StringCalculator {
             for (String number : array) {
 
                 if (Integer.parseInt(number) < 0) {
-                    statement = statement + number + ",";
+                    statement = statement.concat(number.concat(","));
                     condition = false;
                 }
-                if (condition) {
-                    if (Integer.parseInt(number) < 1000) {
-                        sum = sum + Integer.parseInt(number);
-                        condition = true;
-                    }
+                if (condition && Integer.parseInt(number) < 1000) {
+                    sum = sum + Integer.parseInt(number);
+                    condition = true;
                 }
             }
             if (condition) {
