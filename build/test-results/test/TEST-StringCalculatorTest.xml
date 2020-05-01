@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="StringCalculatorTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-03-30T20:24:16" hostname="admin1-ThinkCentre-M72e" time="0.006">
+<testsuite name="StringCalculatorTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-05-01T20:23:58" hostname="admin1-ThinkCentre-M72e" time="0.019">
   <properties/>
-  <testcase name="TestNumber" classname="StringCalculatorTest" time="0.006"/>
-  <system-out><![CDATA[Output 1
+  <testcase name="TestAddition" classname="StringCalculatorTest" time="0.019"/>
+  <system-out><![CDATA[Output 0
+Output 1
+Output 2
+Output 10
+Output 6
+Output 3
+Output 3
+ERROR:negatives not allowed -1,-2,-3,-4,
+Output 3
+Output 6
+ERROR:Invalid input
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

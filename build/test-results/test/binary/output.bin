@@ -1,1 +1,12 @@
+	Output 0
 	Output 1
+	Output 2
+
+Output 10
+	Output 6
+	Output 3
+	Output 3
+)ERROR:negatives not allowed -1,-2,-3,-4,
+	Output 3
+	Output 6
+ERROR:Invalid input

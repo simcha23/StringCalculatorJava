@@ -4,39 +4,44 @@ public class StringCalculator {
 
     public static void main(String[] args){
 
-        add("");
-        add("1");
-        add("1,1");
-        add("1,2,3,4");
-        add("1\n2,3");
-        add("//;\n1;2");
-        add("//4\n142");
-        add("//;\n1000,1;2");
-        add("//***\n1***2***3");
+        try {
+            //Calling a method Add and pass the required data
+            add("");
+            add("1");
+            add("1,1");
+            add("1,2,3,4");
+            add("1\n2,3");
+            add("//;\n1;2");
+            add("//4\n142");
+            add("//;\n1000,1;2");
+            add("//***\n1***2***3");
 
-        //  Negative numbers
-//        add("1,-2,3,-4,-5,8");
+//          Method whose parameters contain negative numbers
+//          add("1,-2,3,-4,-5,8");
 
-        // Invalid input
-//        add("//;\n1000;1;2;");
-//        add("   //;\n1000,1;2");
-//        add("1,2,3//;\n1000,1;2");
+//          Method with invalid parameters
+//          add("//;\n1000;1;2;");
+//          add("   //;\n1000,1;2");
+//          add("1,2,3//;\n1000,1;2");
 
-
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
     public static boolean add(String num){
 
-        if(num.isEmpty()){
+        if( num.isEmpty() ){
             num = "0";
         }
 
-        String delimiter = "[,\n;*]";
+        String delimiter = "[,\n;*]"; //Delimiter used to spit a string into array
 
-        if(num.startsWith("//")) {
+        //
+        if( num.startsWith("//") ) {
 
             String[] str;
-
-            if(num.startsWith("//;") || num.startsWith("//4")){
+            //Check if string start with certain characters and give it a new delimiter
+            if( num.startsWith("//;") || num.startsWith("//4") ){
                 str = num.split("\n", 2);
                 delimiter = "[" + str[0].substring(2) +",]";
             }
@@ -48,36 +53,38 @@ public class StringCalculator {
 
             num  = str[1];
 
-            if(num.endsWith(";")){
+            if( num.endsWith(";") ){
                 num = "@#$%";
             }
         }
 
-        String[] array = num.split(delimiter);
+        String[] array = num.split( delimiter ); //split string into array from a given delimiter
         int sum = 0;
         boolean condition = true;
         String statement = "ERROR:negatives not allowed ";
 
         try {
-            for (String number : array) {
-
-                if (Integer.parseInt(number) < 0) {
-                    statement = statement.concat(number.concat(","));
+            for ( String number : array ) {
+                int input = Integer.parseInt(number); //Validates if is an integer number
+                if ( input < 0 ) {
+                    statement = statement.concat( number.concat( "," ) );
                     condition = false;
                 }
-                if (condition && Integer.parseInt(number) < 1000) {
-                    sum = sum + Integer.parseInt(number);
+                if ( condition && input < 1000 ) { //Calculating a sum of integer numbers
+                    sum = sum + Integer.parseInt( number );
                     condition = true;
                 }
             }
-            if (condition) {
-                System.out.println("Output " + sum);
+            if ( condition ) {
+                System.out.println("Output " + sum); //Prints the sum of integer numbers
             } else {
-                System.out.println(statement);
+                System.out.println(statement); //Prints negative numbers warning
             }
-        }catch (NumberFormatException ex){
-            System.out.println("ERROR:Invalid input");
+        }catch ( NumberFormatException ex ){
+            System.out.println("ERROR:Invalid input"); //Prints invalid input message when invalid input entered
             condition = false;
+        }catch ( Exception ex ){
+            ex.printStackTrace();
         }
 
         return condition;
